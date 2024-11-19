@@ -3,6 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/pricing-table-ui.cjs",
+  "module": "dist/pricing-table-ui.js",
+  "exports": {
+    ".": {
+      "import": "./dist/pricing-table-ui.js",
+      "require": "./dist/pricing-table-ui.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -43,6 +54,7 @@
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",
     "vite": "^5.4.10",
+    "vite-plugin-dts": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.2"
   },
   "eslintConfig": {

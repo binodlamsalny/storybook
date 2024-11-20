@@ -76,36 +76,36 @@ const renderCard = (
                             {cardData.featuredText}
                         </button>
                     )}
-                    <h3 className="text-[24px] font-semibold text-[#FFFFFF]">
+                    <h3 className="2xl:text-[24px] xl:text-[20px] font-semibold text-[#FFFFFF]">
                         {cardData.headerContent}
                     </h3>
                     <div className="flex justify-between gap-6 text-sm mt-2 items-start">
                         <div className="flex flex-1 gap-4 items-center justify-center flex-col">
-                            <p className="text-[#9999B0] font-semibold text-[16px]">
+                            <p className="text-[#9999B0] font-semibold 2xl:text-[16px] xl:text-[14px] text-center">
                                 {cardData.pricing?.upTo10Users?.title}
                             </p>
-                            <p className="text-[30px] font-bold flex items-start gap-1">
+                            <p className="2xl:text-[30px] xl:text-[28px] font-bold flex items-start gap-1">
                                 {cardData.pricing?.upTo10Users?.price}
                                 <span className="text-xs">mo.</span>
                             </p>
-                            <p className="text-xs text-[#9999B0]">
+                            <p className="2xl:text-[14px] xl:text-[10px] text-[#9999B0] text-center">
                                 {cardData.pricing?.upTo10Users?.description}
                             </p>
                         </div>
                         <div className="flex flex-1 gap-4 items-center justify-center flex-col">
-                            <p className="text-[#9999B0] font-semibold text-[16px]">
+                            <p className="text-[#9999B0] font-semibold 2xl:text-[16px] xl:text-[14px] text-center">
                                 {cardData.pricing?.elevenTo100Users?.title}
                             </p>
-                            <p className="text-[30px] font-bold flex items-start gap-1">
+                            <p className="2xl:text-[30px] xl:text-[28px] font-bold flex items-start gap-1">
                                 {cardData.pricing?.elevenTo100Users?.price}
                                 <span className="text-sm">mo.</span>
                             </p>
-                            <p className="text-xs text-center text-[#9999B0]">
+                            <p className="2xl:text-[14px] xl:text-[10px] text-center text-[#9999B0]">
                                 {cardData.pricing?.elevenTo100Users?.description}
                             </p>
                         </div>
                     </div>
-                    <p className="text-[16px] mt-10 mb-4 text-center text-[#DCDCE4] font-medium">
+                    <p className="2xl:text-[16px] xl:text-[14px] mt-10 mb-4 text-center text-[#DCDCE4] font-medium">
                         {cardData.headerInfo}
                     </p>
                 </div>
@@ -116,7 +116,7 @@ const renderCard = (
                     <ul className="list-disc pl-8 mt-4 mb-8">
                         {cardData.listItems.length ? (
                             cardData.listItems.map((item: string, index: number) => (
-                                <li key={index} className="text-[16px] text-[#00003A] mb-2 font-medium">
+                                <li key={index} className="2xl:text-[16px] xl:text-[14px] text-[#00003A] mb-2 font-medium">
                                     {item}
                                 </li>
                             ))
@@ -126,7 +126,7 @@ const renderCard = (
                             </li>
                         )}
                     </ul>
-                    <p className="text-[16px] text-[#00003A] py-6 pr-2 font-medium">{cardData.bodyInfo}</p>
+                    <p className="2xl:text-[16px] xl:text-[14px] text-[#00003A] py-6 pr-2 font-medium">{cardData.bodyInfo}</p>
                 </div>
             }
             footer={
@@ -142,7 +142,7 @@ const renderCard = (
                             <img src={svg} className="h-4 w-4 rotate-[30deg]" alt="" />
                         </button>
                     </a>
-                    <p className="text-[15px] text-[#00003A] p-4 text-center mt-4 leading-6 mb-4 font-sans">
+                    <p className="2xl:text-[15px] xl:text-[13px] text-[#00003A] p-4 text-center mt-4 leading-6 mb-4 font-sans">
                         {cardData.footerText}
                     </p>
                 </div>
@@ -297,17 +297,34 @@ export const MultipleCards: Story = {
     render: (args) => {
         const numberOfCards = args.numberOfCards;
         const featuredCardIndex = args.featuredCard;
-
+    
+        // Dynamically calculate grid columns based on the number of cards
+        const gridColsClass =
+            numberOfCards === 1
+            ? 'grid-cols-1'
+            : numberOfCards === 2
+            ? 'grid-cols-1 md:grid-cols-2'
+            : numberOfCards === 3
+            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            : numberOfCards <= 4
+            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+            : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
+    
         return (
-            <>
-                <div className={`grid gap-9 container mx-auto`} style={{ gridTemplateColumns: `repeat(${numberOfCards}, 1fr)` }}
-                >
-                    {Array.from({ length: numberOfCards }, (_, index) => {
-                        const cardData = getCardData(args, index + 1);
-                        return renderCard(index, cardData, args.cardHeaderClassName, args.cardBodyClassName, args.cardFooterClassName, featuredCardIndex, numberOfCards);
-                    })}
-                </div>
-            </>
+            <div className={`grid ${gridColsClass} gap-6 container mx-auto`}>
+                {Array.from({ length: numberOfCards }, (_, index) => {
+                    const cardData = getCardData(args, index + 1);
+                    return renderCard(
+                        index,
+                        cardData,
+                        args.cardHeaderClassName,
+                        args.cardBodyClassName,
+                        args.cardFooterClassName,
+                        featuredCardIndex,
+                        numberOfCards
+                    );
+                })}
+            </div>
         );
     },
 };

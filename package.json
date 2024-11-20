@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "storybook dev -p 6006",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

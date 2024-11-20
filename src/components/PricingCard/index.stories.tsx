@@ -297,8 +297,7 @@ export const MultipleCards: Story = {
     render: (args) => {
         const numberOfCards = args.numberOfCards;
         const featuredCardIndex = args.featuredCard;
-    
-        // Dynamically calculate grid columns based on the number of cards
+   
         const gridColsClass =
             numberOfCards === 1
             ? 'grid-cols-1'
